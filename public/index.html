@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wasm with Rust</title>
+</head>
+<body>
+    <h1>Wasm with Rust</h1>
+    <input id="name" placeholder="Enter your name" />
+    <button id="greet-btn">Greet</button>
+
+    <script type="module">
+        import init, { greet } from './bundle.js';  // Path to the generated bundle
+
+        async function run() {
+            await init();  // Ensure Wasm module is initialized
+            const button = document.getElementById('greet-btn');
+            button.addEventListener('click', () => {
+                const name = document.getElementById('name').value;
+                greet(name);  // Call the Rust function with the input value
+            });
+        }
+
+        run();  // Ensure WebAssembly module is initialized before using `greet`
+    </script>
+</body>
+</html>
